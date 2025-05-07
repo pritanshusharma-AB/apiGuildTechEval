@@ -10,6 +10,9 @@
     "npm": ">=10.9.2"
   },
   "scripts": {
+    "db:stop": "docker-compose down -v",
+    "db:start": "docker-compose --env-file ./.env up -d",
+    "db:restart": "npm run db:stop && npm run db:start",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",

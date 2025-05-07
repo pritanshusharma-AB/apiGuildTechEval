@@ -2,6 +2,16 @@
 
 A demo NestJS application for testing API guild engineers during the hiring process. This backend application uses a PostgreSQL database via a local Docker setup. Candidates can pull the repo, spin up a database, start the app, and build out feature requests to observe their general computer skills, test development knowledge, and fitness for the role during a 1:1 in-person pair programming session.
 
+## Running Locally
+
+1. add .env file based off .env-sample
+1. install nodejs using [NVM](https://formulae.brew.sh/formula/nvm)
+1. switch to correct node version using NMV `nvm use`
+1. install node_modules `npm install`
+1. install [Rancher desktop](https://formulae.brew.sh/cask/rancher) for running Docker containers
+1. start fresh db containers `npm run db:start`. shuts down existing dbs and restarts clean
+1. run nestjs app `npm run start:dev`
+
 ## Business Challenge
 
 To increase sales and popularity of our beer products, we would like to build out a consumer loyalty program where consumers earn points for their purchases of eligible products. This system tracks purchases at participating retailers nationwide, and credits customer accounts with points that they can later redeem for merchandise or other prizes. Data on customers, products, retailers, and promotions are managed by our company, but data about purchases comes directly from retailer point-of-sale systems via an API call to our consumer-loyalty-backend.
