@@ -13,6 +13,8 @@
     "db:stop": "docker-compose down --volumes && docker volume prune -f",
     "db:start": "docker-compose --env-file ./.env up -d",
     "db:restart": "npm run db:stop && npm run db:start",
+    "typeorm": "typeorm-ts-node-commonjs --dataSource=src/db/dataSource.ts",
+    "migration:generate": "npm run typeorm migration:generate",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
