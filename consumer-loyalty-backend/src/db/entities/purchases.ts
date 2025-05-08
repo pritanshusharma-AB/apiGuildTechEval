@@ -5,7 +5,9 @@ import { Metadata } from './metadata';
 const transactionId = 'transactionId';
 
 @Entity('purchases')
-@Index(snakeCase('idxPurchaseTransactionId'), [transactionId], { unique: true })
+@Index(snakeCase('idxPurchasesTransactionId'), [transactionId], {
+  unique: true,
+})
 export class Purchase extends Metadata {
   /** Unique random-string external ID */
   @Column('varchar', { name: snakeCase(transactionId) })

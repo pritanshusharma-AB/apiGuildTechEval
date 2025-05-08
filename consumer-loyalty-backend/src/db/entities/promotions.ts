@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
+import { Product } from './products';
 
 @Entity('promotions')
 export class Promotion extends Metadata {
@@ -23,4 +24,16 @@ export class Promotion extends Metadata {
 
   @Column('int', { comment: 'version counter; highest is most recent' })
   version: number;
+
+  /** Foreign key to product */
+  @Column('uuid', { name: snakeCase('productId') })
+  productId: string;
+
+  // Many-to-one relationship with Product, many promotions can have the same product */
+  @ManyToOne(() => Product, (product) => product.promotions)
+  @JoinColumn({
+    name: snakeCase('productId'),
+    foreignKeyConstraintName: 'fk_promotions_product_id',
+  })
+  product: Product;
 }

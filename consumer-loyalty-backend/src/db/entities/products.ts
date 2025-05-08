@@ -1,6 +1,7 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { Metadata } from './metadata';
 import { snakeCase } from 'typeorm/util/StringUtils';
+import { Promotion } from './promotions';
 
 const name = 'name';
 
@@ -15,4 +16,8 @@ export class Product extends Metadata {
 
   @Column('int', { comment: 'price in cents, not dollars' })
   price: number;
+
+  /** One-to-many relationship with Promotion, same product can have many promotions */
+  @OneToMany(() => Promotion, (promotion) => promotion.product)
+  promotions: Promotion[];
 }
