@@ -15,6 +15,8 @@
     "db:restart": "npm run db:stop && npm run db:start",
     "typeorm": "typeorm-ts-node-commonjs --dataSource=src/db/dataSource.ts",
     "migration:generate": "npm run typeorm migration:generate",
+    "migration:run": "npm run typeorm migration:run",
+    "migration:revert": "npm run typeorm migration:revert",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
