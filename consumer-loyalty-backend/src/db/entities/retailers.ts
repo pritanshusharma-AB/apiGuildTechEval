@@ -1,6 +1,7 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
+import { Purchase } from './purchases';
 
 const authToken = 'authToken';
 
@@ -16,4 +17,8 @@ export class Retailer extends Metadata {
   /** Auth token used to validate retailer */
   @Column('varchar', { name: snakeCase(authToken) })
   [authToken]: string;
+
+  /** One-to-many relationship with Purchase - one retailer can have many purchases */
+  @OneToMany(() => Purchase, (purchase) => purchase.retailer)
+  purchases: Purchase[];
 }

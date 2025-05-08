@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
 import { Product } from './products';
+import { Purchase } from './purchases';
 
 @Entity('promotions')
 export class Promotion extends Metadata {
@@ -36,4 +37,8 @@ export class Promotion extends Metadata {
     foreignKeyConstraintName: 'fk_promotions_product_id',
   })
   product: Product;
+
+  /** One-to-many relationship with Purchase - one promotion can apply to many purchases */
+  @OneToMany(() => Purchase, (purchase) => purchase.promotion)
+  purchases: Purchase[];
 }

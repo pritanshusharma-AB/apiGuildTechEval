@@ -1,6 +1,10 @@
-import { Column, Entity, Index } from 'typeorm';
+import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
+import { Customer } from './customers';
+import { Product } from './products';
+import { Retailer } from './retailers';
+import { Promotion } from './promotions';
 
 const transactionId = 'transactionId';
 
@@ -46,4 +50,54 @@ export class Purchase extends Metadata {
     comment: 'snapshot of points_earned at purchase time',
   })
   pointsEarned: number;
+
+  /** Foreign key to customer */
+  @Column('uuid', { name: snakeCase('customerId') })
+  customerId: string;
+
+  /** Many-to-one relationship with Customer - many purchases can belong to one customer */
+  @ManyToOne(() => Customer, (customer) => customer.purchases)
+  @JoinColumn({
+    name: snakeCase('customerId'),
+    foreignKeyConstraintName: 'fk_purchases_customerId',
+  })
+  customer: Customer;
+
+  /** Foreign key to product */
+  @Column('uuid', { name: snakeCase('productId') })
+  productId: string;
+
+  /** Many-to-one relationship with Product - many purchases can be for one product */
+  @ManyToOne(() => Product, (product) => product.purchases)
+  @JoinColumn({
+    name: snakeCase('productId'),
+    foreignKeyConstraintName: 'fk_purchases_productId',
+  })
+  product: Product;
+
+  /** Foreign key to retailer */
+  @Column('uuid', { name: snakeCase('retailerId') })
+  retailerId: string;
+
+  /** Many-to-one relationship with Retailer - many purchases can be of one retailer */
+  @ManyToOne(() => Retailer, (retailer) => retailer.purchases)
+  @JoinColumn({
+    name: snakeCase('retailerId'),
+    foreignKeyConstraintName: 'fk_purchases_retailerId',
+  })
+  retailer: Retailer;
+
+  /** Foreign key to promotion (optional) */
+  @Column('uuid', { name: snakeCase('promotionId'), nullable: true })
+  promotionId: string | null;
+
+  /** Many-to-one relationship with Promotion - many purchases can use one promotion */
+  @ManyToOne(() => Promotion, (promotion) => promotion.purchases, {
+    nullable: true,
+  })
+  @JoinColumn({
+    name: snakeCase('promotionId'),
+    foreignKeyConstraintName: 'fk_purchases_promotionId',
+  })
+  promotion: Promotion | null;
 }
