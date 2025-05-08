@@ -10,7 +10,7 @@
     "npm": ">=10.9.2"
   },
   "scripts": {
-    "db:stop": "docker-compose down -v",
+    "db:stop": "docker-compose down --volumes && docker volume prune -f",
     "db:start": "docker-compose --env-file ./.env up -d",
     "db:restart": "npm run db:stop && npm run db:start",
     "build": "nest build",
@@ -30,12 +30,17 @@
     "@apollo/server": "^4.12.0",
     "@nestjs/apollo": "^13.1.0",
     "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/graphql": "^13.1.0",
     "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/typeorm": "^11.0.0",
+    "dotenv": "^16.5.0",
     "graphql": "^16.11.0",
+    "pg": "^8.15.6",
     "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "typeorm": "^0.3.23"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
