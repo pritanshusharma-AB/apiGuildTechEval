@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
 import { Product } from './products';
@@ -6,6 +13,11 @@ import { Purchase } from './purchases';
 import { Retailer } from './retailers';
 
 @Entity('promotions')
+@Index(
+  snakeCase('idxLatestPromotions'),
+  ['productId', 'retailerId', 'startDate', 'endDate', 'version'],
+  { unique: true },
+)
 export class Promotion extends Metadata {
   @Column('date', {
     name: snakeCase('startDate'),
