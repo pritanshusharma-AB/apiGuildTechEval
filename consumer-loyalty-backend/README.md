@@ -33,7 +33,7 @@ When a customer purchases a promoted beer, the store's POS terminal sends a requ
 - Millions of purchase requests could come in per hour, concurrently
 
 ## DB Schema
-<img src="./dbdiagram.png" />
+<img src="src/db/dbdiagram.png" />
 
 
 ## 💡 NestJS Basics You Might Need

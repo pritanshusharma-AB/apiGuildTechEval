@@ -1,0 +1,79 @@
+// Use DBML to define your database structure
+// https://dbml.dbdiagram.io/docs
+
+Table customers {
+  id uuid [not null, pk]
+  first_name varchar [not null]
+  last_name varchar [not null]
+  point_balance int [not null, default: 0, note: 'Current loyalty point balance']
+  created_at timestamp [not null]
+  updated_at timestamp
+
+  indexes {
+    (id) [name: 'PK_133ec679a801fab5e070f73d3ea']
+  }
+}
+
+Table retailers {
+  id uuid [not null, pk]
+  name varchar [not null]
+  auth_token varchar [not null, note: 'Auth token used to validate retailer']
+  created_at timestamp [not null]
+  updated_at timestamp
+
+  indexes {
+    (id) [name: 'PK_1228653999402b52e75d40b1c66']
+    auth_token [unique, name: 'idx_retailers_auth_token']
+  }
+}
+
+Table products {
+  id uuid [not null, pk]
+  name varchar [not null]
+  price int [not null, note: 'price in cents, not dollars']
+  created_at timestamp [not null]
+  updated_at timestamp
+
+  indexes {
+    (id) [name: 'PK_0806c755e0aca124e67c0cf6d7d']
+    name [unique, name: 'idx_products_name']
+  }
+}
+
+Table promotions {
+  id uuid [not null, pk]
+  start_date date [not null, note: 'format yyyy-mm-dd']
+  end_date date [not null, note: 'format yyyy-mm-dd']
+  award_rate int [not null, default: 0, note: 'points per dollar multiplier. 100 means 100 points per dollar spent']
+  version int [not null, note: 'version counter; highest is most recent']
+  product_id uuid [not null, ref: > products.id]
+  retailer_id uuid [not null, ref: > retailers.id, note: 'Promotion is always specific to a retailer']
+  created_at timestamp [not null]
+  updated_at timestamp
+
+  indexes {
+    (id) [name: 'PK_380cecbbe3ac11f0e5a7c452c34']
+    (product_id, retailer_id, start_date, end_date, version) [unique, name: 'idx_latest_promotions']
+  }
+}
+
+Table purchases {
+  id uuid [not null, pk]
+  transaction_id varchar [not null, note: 'Unique random-string external ID']
+  quantity int [not null, default: 0, note: 'count of items purchased']
+  sale_price int [not null, note: 'snapshot of product sale_price at purchase time']
+  total_price int [not null, note: 'calculated total price at purchase time: sale_price * quantity']
+  award_rate int [not null, default: 0, note: 'snapshot of award_rate at purchase time']
+  points_earned int [not null, default: 0, note: 'snapshot of points_earned at purchase time']
+  customer_id uuid [not null, ref: > customers.id]
+  product_id uuid [not null, ref: > products.id]
+  retailer_id uuid [not null, ref: > retailers.id]
+  promotion_id uuid [note: 'nullable', ref: > promotions.id]
+  created_at timestamp [not null]
+  updated_at timestamp
+
+  indexes {
+    (id) [name: 'PK_1d55032f37a34c6eceacbbca6b8']
+    transaction_id [unique, name: 'idx_purchases_transaction_id']
+  }
+}
