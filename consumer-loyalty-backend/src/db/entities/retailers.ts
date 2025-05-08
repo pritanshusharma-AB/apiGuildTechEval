@@ -2,6 +2,7 @@ import { Column, Entity, Index, OneToMany } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
 import { Purchase } from './purchases';
+import { Promotion } from './promotions';
 
 const authToken = 'authToken';
 
@@ -21,4 +22,8 @@ export class Retailer extends Metadata {
   /** One-to-many relationship with Purchase - one retailer can have many purchases */
   @OneToMany(() => Purchase, (purchase) => purchase.retailer)
   purchases: Purchase[];
+
+  /** One-to-many relationship with Promotion - one retailer can have many promotions */
+  @OneToMany(() => Promotion, (promotion) => promotion.retailer)
+  promotions: Promotion[];
 }

@@ -3,6 +3,7 @@ import { snakeCase } from 'typeorm/util/StringUtils';
 import { Metadata } from './metadata';
 import { Product } from './products';
 import { Purchase } from './purchases';
+import { Retailer } from './retailers';
 
 @Entity('promotions')
 export class Promotion extends Metadata {
@@ -34,11 +35,23 @@ export class Promotion extends Metadata {
   @ManyToOne(() => Product, (product) => product.promotions)
   @JoinColumn({
     name: snakeCase('productId'),
-    foreignKeyConstraintName: 'fk_promotions_product_id',
+    foreignKeyConstraintName: 'fk_promotions_productId',
   })
   product: Product;
 
   /** One-to-many relationship with Purchase - one promotion can apply to many purchases */
   @OneToMany(() => Purchase, (purchase) => purchase.promotion)
   purchases: Purchase[];
+
+  /** Foreign key to retailer (optional) */
+  @Column('uuid', { name: snakeCase('retailerId') })
+  retailerId: string;
+
+  /** Many-to-one relationship with Retailer - many promotions can belong to one retailer */
+  @ManyToOne(() => Retailer, (retailer) => retailer.promotions)
+  @JoinColumn({
+    name: snakeCase('retailerId'),
+    foreignKeyConstraintName: 'fk_promotions_retailerId',
+  })
+  retailer: Retailer;
 }
