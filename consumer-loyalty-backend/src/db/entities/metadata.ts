@@ -1,13 +1,24 @@
-import { Column, PrimaryColumn } from 'typeorm';
+import {
+  CreateDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 
 export class Metadata {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('timestamp', { name: snakeCase('createdAt') })
+  @CreateDateColumn({
+    name: snakeCase('createdAt'),
+    type: 'timestamp',
+  })
   createdAt: Date;
 
-  @Column('timestamp', { name: snakeCase('updatedAt'), nullable: true })
+  @UpdateDateColumn({
+    name: snakeCase('updatedAt'),
+    type: 'timestamp',
+    nullable: true,
+  })
   updatedAt: Date | null;
 }
