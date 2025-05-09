@@ -12,15 +12,15 @@ const productUseCaseMap: Record<
   (product?: Product, retailers?: Retailer[]) => Promotion[]
 > = {
   0: () => [],
-  1: allCurrent,
-  2: allCurrent,
-  3: first5Current,
-  4: first5Current,
-  5: allExpired,
-  6: allExpired,
-  7: last5Upcoming,
-  8: last5Upcoming,
-  9: halfTerminatedHalfBoosted,
+  1: allCurrent, // 10 promotions expected
+  2: allCurrent, // 10 promotions expected
+  3: first5Current, // 5 promotions expected
+  4: first5Current, // 5 promotions expected
+  5: allExpired, // 10 promotions expected
+  6: allExpired, // 10 promotions expected
+  7: last5Upcoming, // 5 promotions expected
+  8: last5Upcoming, // 5 promotions expected
+  9: halfTerminatedHalfBoosted, // 20 promotions expected
 };
 
 function buildBase(product: Product, retailer: Retailer): Promotion {
@@ -122,13 +122,12 @@ export default class PromotionSeeder implements Seeder {
     const retailersRepo = dataSource.getRepository(Retailer);
 
     const [products, retailers] = await Promise.all([
-      productsRepo.find(),
-      retailersRepo.find(),
+      productsRepo.find({ order: { name: 'ASC' } }),
+      retailersRepo.find({ order: { name: 'ASC' } }),
     ]);
 
     const items = products.reduce((acc: Promotion[], cur, ind) => {
       const temp = productUseCaseMap[ind](cur, retailers);
-      console.log('LOG fxxz0t3x0t1d =>', temp);
       return [...acc, ...temp];
     }, []);
 
