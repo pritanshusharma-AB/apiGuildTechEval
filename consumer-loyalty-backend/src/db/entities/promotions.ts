@@ -36,7 +36,10 @@ export class Promotion extends Metadata {
   })
   awardRate: number;
 
-  @Column('int', { comment: 'version counter; highest is most recent' })
+  @Column('int', {
+    comment: 'version counter; highest is most recent',
+    default: 0,
+  })
   version: number;
 
   /** Foreign key to product */
