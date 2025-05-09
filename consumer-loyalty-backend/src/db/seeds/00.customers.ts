@@ -13,19 +13,19 @@ export default class CustomerSeeder implements Seeder {
 
     const count = 10;
 
-    const customers = Array(count)
+    const items = Array(count)
       .fill(null)
       .map(() => {
-        const customer = new Customer();
-        customer.firstName = faker.person.firstName();
-        customer.lastName = faker.person.lastName();
-        return customer;
+        const item = new Customer();
+        item.firstName = faker.person.firstName();
+        item.lastName = faker.person.lastName();
+        return item;
       });
 
-    const result = await repository.save(customers);
+    const result = await repository.save(items);
 
     console.log('Seeding Complete ==>', this.name, {
-      customerCount: result.length,
+      itemCount: result.length,
     });
   }
 }
