@@ -4,9 +4,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { HelloResolver } from './hello.resolver';
 import { dataSourceOptions } from './db/dataSource';
 
 @Module({
@@ -20,7 +17,7 @@ import { dataSourceOptions } from './db/dataSource';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, HelloResolver],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
