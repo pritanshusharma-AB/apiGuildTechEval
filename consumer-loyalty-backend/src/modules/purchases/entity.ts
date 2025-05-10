@@ -1,13 +1,13 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { Customer } from './customers';
-import { Metadata } from './metadata';
-import { Product } from './products';
-import { Promotion } from './promotions';
-import { Retailer } from './retailers';
+import { Customer } from '../../db/entities/customers';
+import { MetadataEntity } from '../../db/metadata.entity';
+import { Product } from '../../db/entities/products';
+import { Promotion } from '../../db/entities/promotions';
+import { Retailer } from '../../db/entities/retailers';
 
 @Entity('purchases')
-export class Purchase extends Metadata {
+export class PurchaseEntity extends MetadataEntity {
   /** Quantity of product purchased */
   @Column('int', { default: 0, comment: 'count of items purchased' })
   quantity: number;

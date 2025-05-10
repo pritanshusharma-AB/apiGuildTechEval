@@ -23,7 +23,11 @@ export const dataSourceOptions: DataSourceOptions & SeederOptions = {
   database: DB_NAME,
   username: DB_USER,
   password: DB_PASSWORD,
-  entities: ['dist/db/entities/*.{ts,js}'],
+  entities: [
+    'dist/db/entities/*.{ts,js}',
+    'dist/modules/**/entity.{ts,js}',
+    'dist/db/**.entity.{ts,js}',
+  ],
   migrations: ['dist/db/migrations/*.{ts,js}'],
   seeds: ['dist/db/seeds/*.{ts,js}'],
   synchronize: false,

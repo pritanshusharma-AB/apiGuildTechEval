@@ -1,8 +1,8 @@
 import { Column, Entity, Index, OneToMany } from 'typeorm';
-import { Metadata } from './metadata';
+import { MetadataEntity } from '../metadata.entity';
 import { snakeCase } from 'typeorm/util/StringUtils';
 import { Promotion } from './promotions';
-import { Purchase } from './purchases';
+import { PurchaseEntity } from '../../modules/purchases/entity';
 
 const name = 'name';
 
@@ -11,7 +11,7 @@ const name = 'name';
 @Index(snakeCase('idxProductsName'), [name], {
   unique: true,
 })
-export class Product extends Metadata {
+export class Product extends MetadataEntity {
   @Column('varchar')
   [name]: string;
 
@@ -23,6 +23,6 @@ export class Product extends Metadata {
   promotions: Promotion[];
 
   /** One-to-many relationship with Product - one product can be in many purchases */
-  @OneToMany(() => Purchase, (purchase) => purchase.product)
-  purchases: Purchase[];
+  @OneToMany(() => PurchaseEntity, (purchase) => purchase.product)
+  purchases: PurchaseEntity[];
 }

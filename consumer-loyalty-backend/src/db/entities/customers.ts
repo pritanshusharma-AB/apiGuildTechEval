@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { Metadata } from './metadata';
-import { Purchase } from './purchases';
+import { MetadataEntity } from '../metadata.entity';
+import { PurchaseEntity } from '../../modules/purchases/entity';
 
 @Entity('customers')
-export class Customer extends Metadata {
+export class Customer extends MetadataEntity {
   @Column('varchar', { name: snakeCase('firstName') })
   firstName: string;
 
@@ -16,6 +16,6 @@ export class Customer extends Metadata {
   pointBalance: number;
 
   /** One-to-many relationship with Purchase - one customer can have many purchases */
-  @OneToMany(() => Purchase, (purchase) => purchase.customer)
-  purchases: Purchase[];
+  @OneToMany(() => PurchaseEntity, (purchase) => purchase.customer)
+  purchases: PurchaseEntity[];
 }

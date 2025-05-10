@@ -5,7 +5,7 @@ import {
 } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
 
-export class Metadata {
+export class MetadataEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

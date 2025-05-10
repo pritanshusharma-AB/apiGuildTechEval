@@ -7,9 +7,9 @@ import {
   OneToMany,
 } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { Metadata } from './metadata';
+import { MetadataEntity } from '../metadata.entity';
 import { Product } from './products';
-import { Purchase } from './purchases';
+import { PurchaseEntity } from '../../modules/purchases/entity';
 import { Retailer } from './retailers';
 
 @Entity('promotions')
@@ -18,7 +18,7 @@ import { Retailer } from './retailers';
   ['productId', 'retailerId', 'startDate', 'endDate', 'version'],
   { unique: true },
 )
-export class Promotion extends Metadata {
+export class Promotion extends MetadataEntity {
   @Column('date', {
     name: snakeCase('startDate'),
     comment: 'format yyyy-mm-dd',
@@ -55,8 +55,8 @@ export class Promotion extends Metadata {
   product: Product;
 
   /** One-to-many relationship with Purchase - one promotion can apply to many purchases */
-  @OneToMany(() => Purchase, (purchase) => purchase.promotion)
-  purchases: Purchase[];
+  @OneToMany(() => PurchaseEntity, (purchase) => purchase.promotion)
+  purchases: PurchaseEntity[];
 
   /** Foreign key to retailer (optional) */
   @Column('uuid', { name: snakeCase('retailerId') })

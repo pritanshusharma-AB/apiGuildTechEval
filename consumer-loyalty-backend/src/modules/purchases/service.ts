@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Purchase } from '../../db/entities/purchases';
+import { PurchaseEntity } from './entity';
 
 @Injectable()
 export class PurchaseService {
   constructor(
-    @InjectRepository(Purchase)
-    private purchaseRepository: Repository<Purchase>,
+    @InjectRepository(PurchaseEntity)
+    private purchaseRepository: Repository<PurchaseEntity>,
   ) {}
 
-  async findAll(): Promise<Purchase[]> {
+  async findAll(): Promise<PurchaseEntity[]> {
     return this.purchaseRepository.find({ order: { createdAt: 'DESC' } });
   }
 }
