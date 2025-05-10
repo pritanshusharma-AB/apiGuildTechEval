@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { Customer } from '../../db/entities/customers';
+import { CustomerEntity } from '../customers/entity';
 import { MetadataEntity } from '../../db/metadata.entity';
 import { Product } from '../../db/entities/products';
 import { Promotion } from '../../db/entities/promotions';
@@ -47,12 +47,12 @@ export class PurchaseEntity extends MetadataEntity {
   customerId: string;
 
   /** Many-to-one relationship with Customer - many purchases can belong to one customer */
-  @ManyToOne(() => Customer, (customer) => customer.purchases)
+  @ManyToOne(() => CustomerEntity, (customer) => customer.purchases)
   @JoinColumn({
     name: snakeCase('customerId'),
     foreignKeyConstraintName: 'fk_purchases_customerId',
   })
-  customer: Customer;
+  customer: CustomerEntity;
 
   /** Foreign key to product */
   @Column('uuid', { name: snakeCase('productId') })

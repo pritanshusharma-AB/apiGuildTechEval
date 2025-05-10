@@ -1,10 +1,10 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { MetadataEntity } from '../metadata.entity';
-import { PurchaseEntity } from '../../modules/purchases/entity';
+import { MetadataEntity } from '../../db/metadata.entity';
+import { PurchaseEntity } from '../purchases/entity';
 
 @Entity('customers')
-export class Customer extends MetadataEntity {
+export class CustomerEntity extends MetadataEntity {
   @Column('varchar', { name: snakeCase('firstName') })
   firstName: string;
 

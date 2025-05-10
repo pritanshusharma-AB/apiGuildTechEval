@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './db/dataSource';
 import { PurchaseModule } from './modules/purchases/module';
+import { CustomerModule } from './modules/customers/module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PurchaseModule } from './modules/purchases/module';
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     PurchaseModule,
+    CustomerModule,
   ],
   controllers: [],
   providers: [],

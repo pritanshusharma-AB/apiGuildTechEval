@@ -1,16 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
-
-@ObjectType()
-class MetadataObject {
-  @Field(() => ID)
-  id: string;
-
-  @Field(() => Date)
-  createdAt: Date;
-
-  @Field(() => Date, { nullable: true })
-  updatedAt?: Date | null;
-}
+import { MetadataObject } from 'src/common/metadata.object';
 
 @ObjectType()
 export class PurchaseObject extends MetadataObject {

@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Seeder } from 'typeorm-extension';
 import { faker } from '@faker-js/faker';
-import { Customer } from '../entities/customers';
+import { CustomerEntity } from '../../modules/customers/entity';
 
 export default class CustomerSeeder implements Seeder {
   readonly name = CustomerSeeder.name;
@@ -9,14 +9,14 @@ export default class CustomerSeeder implements Seeder {
   public async run(dataSource: DataSource): Promise<void> {
     console.log('Seeding Starting ==>', this.name);
 
-    const repository = dataSource.getRepository(Customer);
+    const repository = dataSource.getRepository(CustomerEntity);
 
     const count = 10;
 
     const items = Array(count)
       .fill(null)
       .map(() => {
-        const item = new Customer();
+        const item = new CustomerEntity();
         item.firstName = faker.person.firstName();
         item.lastName = faker.person.lastName();
         return item;
