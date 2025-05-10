@@ -1,10 +1,10 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { snakeCase } from 'typeorm/util/StringUtils';
-import { Metadata } from './metadata';
 import { Customer } from './customers';
+import { Metadata } from './metadata';
 import { Product } from './products';
-import { Retailer } from './retailers';
 import { Promotion } from './promotions';
+import { Retailer } from './retailers';
 
 @Entity('purchases')
 export class Purchase extends Metadata {
