@@ -6,17 +6,8 @@ import { Product } from './products';
 import { Retailer } from './retailers';
 import { Promotion } from './promotions';
 
-const transactionId = 'transactionId';
-
 @Entity('purchases')
-@Index(snakeCase('idxPurchasesTransactionId'), [transactionId], {
-  unique: true,
-})
 export class Purchase extends Metadata {
-  /** Unique random-string external ID */
-  @Column('varchar', { name: snakeCase(transactionId) })
-  [transactionId]: string;
-
   /** Quantity of product purchased */
   @Column('int', { default: 0, comment: 'count of items purchased' })
   quantity: number;
