@@ -17,6 +17,7 @@
     "db:migration:run": "npm run typeorm migration:run",
     "db:migration:revert": "npm run typeorm migration:revert",
     "db:seed": "npm run build && ts-node node_modules/typeorm-extension/bin/cli.cjs seed:run -d dist/src/db/dataSource.js",
+    "db:reset": "npm run db:restart && npm run db:migration:run && npm run db:seed",
     "typeorm": "npm run build && typeorm-ts-node-commonjs --dataSource=src/db/dataSource.ts",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

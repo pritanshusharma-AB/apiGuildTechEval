@@ -13,14 +13,10 @@ const productUseCaseMap: Record<
 > = {
   0: () => [],
   1: allCurrent, // 10 promotions expected
-  2: allCurrent, // 10 promotions expected
+  2: allExpired, // 10 promotions expected
   3: first5Current, // 5 promotions expected
-  4: first5Current, // 5 promotions expected
-  5: allExpired, // 10 promotions expected
-  6: allExpired, // 10 promotions expected
-  7: last5Upcoming, // 5 promotions expected
-  8: last5Upcoming, // 5 promotions expected
-  9: halfTerminatedHalfBoosted, // 20 promotions expected
+  4: last5Upcoming, // 5 promotions expected
+  5: halfTerminatedHalfBoosted, // 20 promotions expected
 };
 
 function buildBase(product: Product, retailer: Retailer): Promotion {
@@ -63,11 +59,13 @@ function last5Upcoming(product: Product, retailers: Retailer[]): Promotion[] {
 function allExpired(product: Product, retailers: Retailer[]): Promotion[] {
   return retailers.map((retailer) => {
     const endDate = faker.date.recent({ days: 60 });
+    const startDate = subDays(endDate, 180);
+    const createdAt = subDays(startDate, 10);
     return {
       ...buildBase(product, retailer),
       endDate,
-      startDate: subDays(endDate, 180),
-      createdAt: subDays(endDate, 190),
+      startDate,
+      createdAt,
     };
   });
 }
@@ -77,7 +75,8 @@ function halfTerminatedHalfBoosted(
   product: Product,
   retailers: Retailer[],
 ): Promotion[] {
-  const startDate = subDays(new Date(), 100);
+  const today = new Date();
+  const startDate = subDays(today, 100);
 
   // Create initial promotions: started 100 days ago, ending in 80 days
   const initial = retailers.map((retailer) => ({
@@ -90,7 +89,7 @@ function halfTerminatedHalfBoosted(
   }));
 
   const half = Math.floor(initial.length / 2);
-  const effectiveChangeDate = subDays(startDate, 15); // 15 days ago
+  const effectiveChangeDate = subDays(today, 15); // 15 days ago
 
   // First half: terminated
   const terminated = initial.slice(0, half).map((promotion) => ({
@@ -127,7 +126,7 @@ export default class PromotionSeeder implements Seeder {
     ]);
 
     const items = products.reduce((acc: Promotion[], cur, ind) => {
-      const temp = productUseCaseMap[ind](cur, retailers);
+      const temp = productUseCaseMap[ind]?.(cur, retailers) ?? [];
       return [...acc, ...temp];
     }, []);
 
