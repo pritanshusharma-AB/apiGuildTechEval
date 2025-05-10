@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './db/dataSource';
+import { PurchaseModule } from './modules/purchases/module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { dataSourceOptions } from './db/dataSource';
       playground: false, // Enable playground for development
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
+    PurchaseModule,
   ],
   controllers: [],
   providers: [],
