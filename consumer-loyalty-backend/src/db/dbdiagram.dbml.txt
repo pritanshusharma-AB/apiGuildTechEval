@@ -59,7 +59,6 @@ Table promotions {
 
 Table purchases {
   id uuid [not null, pk]
-  transaction_id varchar [not null, note: 'Unique random-string external ID']
   quantity int [not null, default: 0, note: 'count of items purchased']
   sale_price int [not null, note: 'snapshot of product sale_price at purchase time']
   total_price int [not null, note: 'calculated total price at purchase time: sale_price * quantity']
@@ -74,6 +73,5 @@ Table purchases {
 
   indexes {
     (id) [name: 'PK_1d55032f37a34c6eceacbbca6b8']
-    transaction_id [unique, name: 'idx_purchases_transaction_id']
   }
 }
