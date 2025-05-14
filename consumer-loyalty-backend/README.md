@@ -51,14 +51,3 @@ https://docs.nestjs.com/first-steps
 <br/>@Injectable() service with depedency injection
 <br/>@Entity() + @PrimaryGeneratedColumn() for DB models
 <br/>@IsString(), @IsNotEmpty() for validation with class-validator
-
-## 🧩 Optional Stretch Challenges
-
-1. What are some ways we could optimize for scale and speed?
-1. How would you handle duplicate transaction IDs across retailers?
-1. What if the customer isn't found?
-1. How would you support promotions based on retailer region?
-1. Would you consider event ingestion instead of direct writes?
-1. How would you monitor if points were being miscounted?
-1. How could we account for different timezones?
-1. What could we do to add observability to this service to help with debugging?
